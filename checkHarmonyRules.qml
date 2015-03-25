@@ -186,7 +186,11 @@ MuseScore {
                   if (!isBetween(note1,note2,note3)) {
                         note3.color = colorError;
                         markText(note1,note2,
-                        "6th should be followed by\nnote within interval",
+                        "6th better avoided, but should be followed by\nnote within interval",
+                              colorError,track,tick);
+                  } else {
+                        markText(note1,note2,
+                        "6th better avoided",
                               colorError,track,tick);
                   }
             }
@@ -324,7 +328,9 @@ MuseScore {
                                     var note = notes[notes.length-1];
 
                                     // check for some voice rules
-                                    if (! curRest[track]) {
+                                    // if we have a new pitch
+                                    if ((! curRest[track]) 
+                                         && curNote[track].pitch != note.pitch) {
                                           // previous note present
                                           // check for augmented interval
                                           if (isAugmentedInt(note, curNote[track])) {
@@ -357,13 +363,17 @@ MuseScore {
 
                                     // remember note
 
-                                    prevTick[track]=curTick[track];
-                                    prevRest[track]=curRest[track];
-                                    prevNote[track]=curNote[track];
+                                    if (curNote[track].pitch != note.pitch) {
+                                          prevTick[track]=curTick[track];
+                                          prevRest[track]=curRest[track];
+                                          prevNote[track]=curNote[track];
+                                          changed[track]=true;
+                                    } else {
+                                          changed[track]=false;
+                                    }
                                     curRest[track]=false;
                                     curNote[track]=note;
                                     curTick[track]=segment.tick;
-                                    changed[track]=true;
                               } else if (segment.elementAt(track).type == Element.REST) {
                                     if (!curRest[track]) {
                                           // was note
