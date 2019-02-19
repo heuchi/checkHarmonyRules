@@ -27,7 +27,7 @@
 
 import QtQuick 2.0
 import QtQuick.Dialogs 1.1
-import MuseScore 1.0
+import MuseScore 3.0
 
 MuseScore {
       menuPath: "Plugins.Proof Reading.Check Harmony Rules"
@@ -83,7 +83,7 @@ MuseScore {
             var myText = newElement(Element.STAFF_TEXT);
             myText.text = msg;
             //myText.pos.x = 0;
-            myText.pos.y = 1;
+            myText.offsetY = 1;
             
             var cursor = curScore.newCursor();
             cursor.rewind(0);
@@ -203,11 +203,11 @@ MuseScore {
             if (dpitch > 9 && dpitch != 12 && dtpc < 6) {
                   if (flag) {
                         markText(note1,note2,
-                        "No 7ths, 9ths &amp; larger\neven with 1 note in between",
+                        "No 7ths, 9ths or larger\nnor with 1 note in between",
                         colorLargeInt,track,tick);
                   } else {
                         markText(note1, note2,
-                        "No 7ths, 9ths &amp; larger",colorLargeInt,track,tick);
+                        "No 7ths, 9ths or larger",colorLargeInt,track,tick);
                   }
             }
       }
@@ -227,7 +227,7 @@ MuseScore {
             if (isOctave(note2,note3) && !isBetween(note2,note3,note1)) {
                   note3.color = colorError;
                   markText(note1,note2,
-                        "8va should be preceeded by note within compass",
+                        "Octave should be preceeded by note within compass",
                         colorError,track,tick);
             }
             // check if note1 and note2 form an octave
@@ -235,7 +235,7 @@ MuseScore {
             if (isOctave(note1,note2) && !isBetween(note1,note2,note3)) {
                   note3.color = colorError;
                   markText(note1,note2,
-                        "8va should be followed by note within compass",
+                        "Octave should be followed by note within compass",
                         colorError,track,tick);
             }
       }           
@@ -408,14 +408,14 @@ MuseScore {
                                                       if (cint == pint) {
                                                             foundParallels++;
                                                             console.log ("P5:"+cint+", "+pint);
-                                                            markText(prevNote[track],prevNote[i],"open 5",
+                                                            markText(prevNote[track],prevNote[i],"parallel 5th",
                                                                   colorFifth,track,prevTick[track]);
                                                             markColor(curNote[track],curNote[i],colorFifth);
                                                       } else if (dir1 == 1 && Math.abs(pint) < Math.abs(cint)) {
                                                             // hidden parallel (only when moving up)
                                                             foundParallels++;
                                                             console.log ("H5:"+cint+", "+pint);
-                                                            markText(prevNote[track],prevNote[i],"hidden 5",
+                                                            markText(prevNote[track],prevNote[i],"hidden 5th",
                                                                   colorFifth,track,prevTick[track]);
                                                             markColor(curNote[track],curNote[i],colorFifth);
                                                       }                                                
@@ -426,14 +426,14 @@ MuseScore {
                                                       if (cint == pint) {
                                                             foundParallels++;
                                                             console.log ("P8:"+cint+", "+pint+"Tracks "+track+","+i+" Tick="+segment.tick);
-                                                            markText(prevNote[track],prevNote[i],"open 8",
+                                                            markText(prevNote[track],prevNote[i],"parallel 8th",
                                                                   colorOctave,track,prevTick[track]);
                                                             markColor(curNote[track],curNote[i],colorOctave);
                                                       } else if (dir1 == 1 && Math.abs(pint) < Math.abs(cint)) {
                                                             // hidden parallel (only when moving up)
                                                             foundParallels++;
                                                             console.log ("H8:"+cint+", "+pint);
-                                                            markText(prevNote[track],prevNote[i],"hidden 8",
+                                                            markText(prevNote[track],prevNote[i],"hidden 8th",
                                                                   colorOctave,track,prevTick[track]);
                                                             markColor(curNote[track],curNote[i],colorOctave);
                                                       }                                                
