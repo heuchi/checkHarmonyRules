@@ -27,7 +27,7 @@
 
 import QtQuick 2.0
 import QtQuick.Dialogs 1.1
-import MuseScore 1.0
+import MuseScore 3.0
 
 MuseScore {
       menuPath: "Plugins.Proof Reading.Check Harmony Rules"
@@ -83,7 +83,7 @@ MuseScore {
             var myText = newElement(Element.STAFF_TEXT);
             myText.text = msg;
             //myText.pos.x = 0;
-            myText.pos.y = 1;
+            myText.offsetY = 1;
             
             var cursor = curScore.newCursor();
             cursor.rewind(0);
